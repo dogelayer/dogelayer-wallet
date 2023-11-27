@@ -1,0 +1,8 @@
+python -m venv env
+#active venv
+python -m pip install --upgrade pip
+python -m pip install  ".[gui,crypto]"
+#copy libsecp256k1-2.dll to electrum dir
+
+python .\run_electrum -v="debug,network=debug,interface=debug"
+python .\run_electrum -v

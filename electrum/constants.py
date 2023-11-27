@@ -146,6 +146,29 @@ class BitcoinTestnet(AbstractNet):
     ]
 
 
+class DogecoinTestnet(AbstractNet):
+    NET_NAME = "dogecoin_testnet"
+    TESTNET = True
+    WIF_PREFIX = 0xF1
+    ADDRTYPE_P2PKH = 113
+    ADDRTYPE_P2SH = 196
+    SEGWIT_HRP = "tb"
+    BOLT11_HRP = SEGWIT_HRP
+    GENESIS = "bb0a78264637406b6360aad926284d544d7049f45189db5664f3c4d07350559e"
+    DEFAULT_PORTS = {"t": "51001", "s": "51002"}
+    DEFAULT_SERVERS = read_json("servers_dogecoin_testnet.json", {})
+    CHECKPOINTS = read_json("checkpoints_dogecoin_testnet.json", [])
+
+    XPRV_HEADERS = {
+        "standard": 0x04358394,  # tprv
+    }
+    XPRV_HEADERS_INV = inv_dict(XPRV_HEADERS)
+    XPUB_HEADERS = {
+        "standard": 0x043587CF,  # tpub
+    }
+    XPUB_HEADERS_INV = inv_dict(XPUB_HEADERS)
+    BIP44_COIN_TYPE = 0
+
 class BitcoinRegtest(BitcoinTestnet):
 
     NET_NAME = "regtest"
@@ -184,7 +207,7 @@ class BitcoinSignet(BitcoinTestnet):
 NETS_LIST = tuple(all_subclasses(AbstractNet))
 
 # don't import net directly, import the module instead (so that net is singleton)
-net = BitcoinMainnet
+net = DogecoinTestnet
 
 def set_signet():
     global net
@@ -205,3 +228,7 @@ def set_testnet():
 def set_regtest():
     global net
     net = BitcoinRegtest
+
+def set_dogecoin_testnet():
+    global net
+    net = DogecoinTestnet
