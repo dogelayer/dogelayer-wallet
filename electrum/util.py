@@ -86,11 +86,11 @@ def all_subclasses(cls) -> Set:
 ca_path = certifi.where()
 
 
-base_units = {'BTC':8, 'mBTC':5, 'bits':2, 'sat':0}
+base_units = {'DOGE':8, 'mDOGE':5, 'bits':2, 'sat':0}
 base_units_inverse = inv_dict(base_units)
-base_units_list = ['BTC', 'mBTC', 'bits', 'sat']  # list(dict) does not guarantee order
+base_units_list = ['DOGE', 'mDOGE', 'bits', 'sat']  # list(dict) does not guarantee order
 
-DECIMAL_POINT_DEFAULT = 5  # mBTC
+DECIMAL_POINT_DEFAULT = 8  # DOGE
 
 
 class UnknownBaseUnit(Exception): pass
@@ -940,6 +940,13 @@ testnet_block_explorers = {
                        {'tx': 'tx/', 'addr': 'address/'}),
 }
 
+dogecoin_testnet_block_explorers = {
+    'dogelayer.org': ('https://dogetest-explorer.dogelayer.org/',
+                       {'tx': 'tx/', 'addr': 'address/'}),
+    'chain.so': ('https://chain.so/',
+                       {'tx': 'tx/DOGETEST/', 'addr': 'address/DOGETEST/'}),
+}
+
 signet_block_explorers = {
     'bc-2.jp': ('https://explorer.bc-2.jp/',
                         {'tx': 'tx/', 'addr': 'address/'}),
@@ -964,6 +971,8 @@ def block_explorer_info():
         return testnet_block_explorers
     elif constants.net.NET_NAME == "signet":
         return signet_block_explorers
+    elif constants.net.NET_NAME == "dogecoin_testnet":
+        return dogecoin_testnet_block_explorers
     return mainnet_block_explorers
 
 

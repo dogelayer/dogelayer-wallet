@@ -1116,7 +1116,7 @@ This will result in longer routes; it might increase your fees and decrease the 
     )
 
     BLOCK_EXPLORER = ConfigVar(
-        'block_explorer', default='Blockstream.info', type_=str,
+        'block_explorer', default='dogelayer.org', type_=str,
         short_desc=lambda: _('Online Block Explorer'),
         long_desc=lambda: _('Choose which online block explorer to use for functions that open a web browser'),
     )
