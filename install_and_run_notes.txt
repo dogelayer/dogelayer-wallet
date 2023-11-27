@@ -6,3 +6,30 @@ python -m pip install  ".[gui,crypto]"
 
 python .\run_electrum -v="debug,network=debug,interface=debug"
 python .\run_electrum -v
+
+#add more debug info
+python .\run_electrum -v="debug,network=debug,interface=debug"
+
+#electrumx block_headers should truncate auxpow data anyway.
+
+diff --git a/electrumx/server/session.py b/electrumx/server/session.py
+index b7dcd86..639e9bf 100644
+--- a/electrumx/server/session.py
++++ b/electrumx/server/session.py
+@@ -1812,6 +1812,7 @@ class AuxPoWElectrumX(ElectrumX):
+     async def block_headers(self, start_height, count, cp_height=0):
+         result = await super().block_headers(start_height, count, cp_height)
+ 
++        result['hex'] = self.truncate_auxpow(result['hex'], start_height)
+         # Older protocol versions don't truncate AuxPoW
+         if self.protocol_tuple < (1, 4, 1):
+             return result
+@@ -1821,7 +1822,7 @@ class AuxPoWElectrumX(ElectrumX):
+             return result
+ 
+         # Covered by a checkpoint; truncate AuxPoW data
+-        result['hex'] = self.truncate_auxpow(result['hex'], start_height)
++        #result['hex'] = self.truncate_auxpow(result['hex'], start_height)
+         return result
+ 
+     def truncate_auxpow(self, headers_full_hex, start_height):
